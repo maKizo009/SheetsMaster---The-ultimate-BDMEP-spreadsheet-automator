@@ -1,9 +1,17 @@
-# Bem-vindo ao Automatizador de Planilhas!
+# APRESENTANDO SHEETSMASTER
 
-O Automatizador de Planilhas é uma ferramenta que facilita a criação e a formatação de planilhas no Excel. Com ele, você pode transformar seus dados em tabelas organizadas, com cores, bordas, filtros e fórmulas (essa parte ainda em desenvolvimento).
+SheetsMaster é um software que facilita a manipulação de dados meteorológicos do BDMEP. Com ele, você pode:
 
-A versão atual do Automatizador de Planilhas é uma versão alfa da alfa, ou seja, ainda está em desenvolvimento e pode apresentar alguns bugs ou erros. Por isso, pedimos a sua compreensão e colaboração para nos enviar o seu feedback e as suas sugestões de melhoria.
+- Adicionar planilhas do BDMEP recém baixadas do site, SEM PRECISAR CONFIGURAR NADA.
+- Adicionar os dados de temperatura mínima e máxima em uma planilha nova, com apenas um clique.
+- Obter os dados prontos para análise, como se fosse mágica.
 
-O Automatizador de Planilhas funciona com o formato padrão usado nas principais planilhas de Excel, como o .xlsx ou o .csv. Você só precisa selecionar o arquivo que deseja formatar e seguir as instruções na tela. Em poucos minutos, você terá uma planilha pronta para usar!
+No entanto, o SheetsMaster ainda tem algumas limitações que serão corrigidas em breve:
 
-Esperamos que você aproveite o Automatizador de Planilhas e que ele seja útil para o seu trabalho ou estudo. Obrigado por escolher a nossa ferramenta!
+- As planilhas precisam estar descompactadas e dentro da pasta downloads. (Isso é muito importante!)
+- Não tem interface gráfica, portanto você precisa copiar o nome do arquivo na pasta downloads (com a extensão) e colar no prompt
+- Só aceita dados do BDMEP. (Mais opções que permitam download de dados em formato planilha serão adicionados)
+- Os dados precisam estar separados por ponto para o SheetsMaster funcionar. (O usuário seleciona isso nas opções do BDMEP, mas na próxima atualização isso será resolvido)
+- Por enquanto, o SheetsMaster não permite adicionar os dados em uma planilha já existente. (Isso será resolvido na versão 2.0 que será lançada nos próximos dias)
+
+O SheetsMaster é um programa de código aberto e uma versão .exe será adicionada com a versão 2.0.
