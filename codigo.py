@@ -3,7 +3,6 @@ import csv
 import os
 from openpyxl import load_workbook
 from shutil import copyfile
-import time
 
 perguntaDados = input("Adicione o nome da planilha que você quer usar e que esteja na pasta 'Downloads': ")
 
