@@ -1,4 +1,13 @@
-# APRESENTANDO SHEETSMASTER
+# SheetsMaster 1.5
+
+Nesta nova versão, foram adicionadas algumas melhorias:
+
+- Uma janela para facilitar o usuário a escolher a planilha que deseja extrair dados.
+
+- Estamos nos esforçando para trazer um arquivo .exe para facilitar o uso do programa, sem necessidade de instalar nada, em breve.
+- Também adicionaremos mais informações sobre o andamento da extração dos dados na interface gráfica, como o número de planilhas processadas e o tempo estimado, se eu conseguir fazer isso.
+Estas melhorias visam tornar o programa mais prático e eficiente para os usuários. No entanto, o design da interface gráfica não foi priorizado, pois o foco é na funcionalidade e na precisão dos dados.
+Espero que você aproveite esta nova versão do SheetsMaster e aguardo seu feedback. Obrigado por usar o programa!
 
 SheetsMaster é um software que facilita a manipulação de dados meteorológicos do BDMEP. Com ele, você pode:
 
