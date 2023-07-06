@@ -5,16 +5,45 @@ from openpyxl import load_workbook
 from shutil import copyfile
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import scrolledtext
+
 
 janelaUsuario = tk.Tk()
 larguraJanela = 500
 alturaJanela = 300
 janelaUsuario.geometry(f"{larguraJanela}x{alturaJanela}")
 
+ErrorLabel = tk.Label(janelaUsuario, text="")
+ErrorLabel.pack()
+def on_click_buttom():
+    ErrorLabel.config(text="Nenhum arquivo foi encontrado. Tente novamente.")
+
+Sucesso = tk.Label(text="")
+Sucesso.pack()
+def on_click_buttom_sucess():
+    Sucesso.config(text="Sua planilha está sendo automatizada...")
+
+Dados = tk.Label(text="")
+Dados.pack()
+def data_show():
+    Dados.config(text="")
+
+text = scrolledtext.ScrolledText(janelaUsuario)
+text.pack()
+def print_message(message1, message2):
+    text.insert(tk.END, message1 + "\n", message2 + "\n")
+    text.see(tk.END)
+
+text2 = scrolledtext.ScrolledText(janelaUsuario)
+text2.pack()
+def print_message2(message):
+    text2.insert(tk.END, message + "\n")
+    text2.pack()
+
 def encontrandoArquivo():
     selecioneArquivo = filedialog.askopenfilename(initialdir=os.path.expanduser("~/Downloads"), title="Selecione o CSV nessa pasta", filetypes=(("Arquivos CSV", "*.csv"), ("Todos os arquivos", "*.*")))
     processandoArquivo(selecioneArquivo)
-
+    
 botaoSelecionarArquivo = tk.Button(janelaUsuario, text="Selecionar CSV", command=encontrandoArquivo)
 botaoSelecionarArquivo.pack(pady=10)
 
@@ -22,7 +51,7 @@ def processandoArquivo(arquivo):
     if arquivo:
         #Usando ; para delimitar as colunas da planilha
         print("Arquivo selecionado: ", arquivo)
-                        #Criando os boto~ões e atribuindo as funções
+        #Criando os boto~ões e atribuindo as funções
 
         #Formatando a planilha e delimitando os dados usando o ";"
         with open(arquivo, "r") as f_entrada:
@@ -77,8 +106,9 @@ def processandoArquivo(arquivo):
         dados1 = ("A estação de {}, registrou sua menor máxima em {}, com {} graus, e a maior em {} com {}.".format(primeira_linha, resultado["Data"], resultado["Max"], resultado3["Data"], resultado3["Max"]))
         dados2 = ("Nas mínimas, a menor foi {} graus em {}, e a maior foi {}, em {}.".format(resultado2["Min"], resultado2["Data"], resultado4["Min"], resultado4["Data"]))
 
-        print(dados1, dados2)
-        print("Sua planilha está sendo automatizada...")
+        print_message(dados1, dados2)
+        print_message2("Sua planilha está sendo automatizada...")
+        print_message2("Sua planilha foi formatada automaticamente. Volte sempre!")
 
         book = load_workbook("Modelo para normais climatológicas 1991-2020.xlsx")
 
@@ -117,12 +147,20 @@ def processandoArquivo(arquivo):
                     ws.cell(row=row, column=col, value=value)
 
         book.save(novoCaminho)
-        print("Sua planilha foi formatada automaticamente. Volte sempre!")
 
-    else:
-        print("Nenhum arquivo foi encontrado")
+def VerificarParametro():
+    while not processandoArquivo() in processandoArquivo(filetypes=(("Arquivos CSV", "*.csv"))):
+        #Enquanto o IF acima não for verdadeiro, é para exibir a mensagem de erro na UI. (while)
+        #E precisa criar o botão do input, que tenha a função de procurar um arquivo, ou setar a variável
+        #Que vai processar o bloco do arquivo selecionado. coloque todo o protocolo dentro do botão input.
+        janelaJaneLabel = tk.Label()
+        larguraJaneLabel = 200
+        alturaJaneLabel = 30
+        janelaJaneLabel.winfo_geometry(f"{larguraJaneLabel}x{alturaJaneLabel}")
+        MensagemLabel = tk.Label(janelaJaneLabel, text="Nenhum arquivo foi encontrado. Tente novamente.")
+        ()
+        botaoSelecionarArquivo = tk.Button(janelaUsuario, text="Selecionar CSV", command=encontrandoArquivo)
+        botaoSelecionarArquivo.pack(pady=10)
+        processandoArquivo(arquivo) 
 
 janelaUsuario.mainloop()
-
-
-
