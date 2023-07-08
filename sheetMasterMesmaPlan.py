@@ -11,6 +11,7 @@ import sys
 janelaUsuario = tk.Tk()
 larguraJanela = 500
 alturaJanela = 300
+janelaUsuario.title("SheetsMaster")
 janelaUsuario.geometry(f"{larguraJanela}x{alturaJanela}")
 
 barraProgresso = ttk.Progressbar(janelaUsuario, orient="horizontal", length=200, mode="determinate")
