@@ -7,6 +7,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import ttk
 import sys
+import sheetMasters
 
 janelaUsuario = tk.Tk()
 larguraJanela = 500
@@ -74,7 +75,6 @@ def processandoArquivo(escolhaUsuario_CSV):
             leitor["Mes"] = leitor["Data"].dt.month
             leitor["Ano"] = leitor["Data"].dt.year
 
-
                 #Imprimindo os resultados na tela
             dados1 = ("A estação de {}, registrou sua menor máxima em {}, com {} graus, e a maior em {} com {}.".format(primeiraLinha, resultado["Data"], resultado["Max"], resultado3["Data"], resultado3["Max"]))
             dados2 = ("Nas mínimas, a menor foi {} graus em {}, e a maior foi {}, em {}.".format(resultado2["Min"], resultado2["Data"], resultado4["Min"], resultado4["Data"]))
@@ -107,25 +107,13 @@ def planilhaDoUsuario():
 
         
 def adicionandoNaPlanilha(planilha):
-
     botaoSelecaoXLSX.config(state="disabled")
-
     primeiroAno = min(int(sheet) for sheet in planilha.sheetnames if sheet.isnumeric())
-
     anos = leitor["Ano"].dropna().unique()
-    barraProgresso['maximum'] = len(anos)
-
-    for i, ano in enumerate(anos):
-         if ano < primeiroAno:
-              continue
 
     for ano in leitor["Ano"].dropna().unique():
         if ano < primeiroAno:
              continue
-        
-        barraProgresso['value'] = i + 1
-
-        janelaUsuario.update_idletasks()
         
         dadosAno = leitor[leitor["Ano"]==ano]
         print(f"Ano: {ano}")
@@ -156,18 +144,24 @@ def adicionandoNaPlanilha(planilha):
                 ws = planilha[sheet_name]
         else:        
                 continue
-        
+                
+        barraProgresso['maximum'] = organizado.shape[1]
         for col, col_data in enumerate(organizado.values.T, start=2):
-             for row, value in enumerate(col_data, start=3):
-                  if pd.isna(value):
-                       value = "-"
+            for row, value in enumerate(col_data, start=3):
+                cell_value = ws.cell(row=row, column=col).value
+                ws.cell(row=row, column=col, value=value)
+                barraProgresso['value'] = col - 1
 
-                       ws.cell(row=row, column=col, value=value)
-             
+                #else:
+                    #print(f"Not writing value {value} to cell ({row}, {col}) because cell value is {cell_value}")
 
     planilha.save(caminho_planilha)
+
+
+
+
     messagebox.showinfo("Operação concluída", "Sua planilha foi preenchida!!")
-    print("Sua planilha foi preenchida!")
+
 
 def finalizar():
      if adicionandoNaPlanilha:
