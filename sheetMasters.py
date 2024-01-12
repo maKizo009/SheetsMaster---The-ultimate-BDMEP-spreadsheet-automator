@@ -1,19 +1,26 @@
+    #!.venv/bin/python
+
 import pandas as pd
 import csv
 import os
 from openpyxl import load_workbook
 from shutil import copyfile
+import sys
 
-perguntaDados = input("Adicione o nome da planilha que você quer usar e que esteja na pasta 'Downloads': ")
+caminho_do_csv = os.path.expanduser('~/Downloads')
 
-caminho_para_downloads = os.path.expanduser("~/Downloads")
-caminho_completo_para_arquivo = os.path.join(caminho_para_downloads, perguntaDados)
-
+perguntaDados = os.path.join(caminho_do_csv, " ".join(sys.argv[1:]))
 
 #Formatando a planilha e delimitando os dados usando o ";"
-with open(caminho_completo_para_arquivo, "r") as f_entrada:
-    leitor = csv.reader(f_entrada, delimiter=";")
+pergunta_excluir_csv = input("Deseja exluir o arquivo CSV utilizado após conlusão do processo? (S/n) ").upper()
 
+while pergunta_excluir_csv not in ["S", "N"]:
+    print("Responda com sim ou não: ")
+    pergunta_excluir_csv = input().upper()
+
+    print("Em caso de erro, pode ser que o arquivo não exista na pasta especificada. Para o programa funcionar, adicione o arquivo na pasta Downloads e remova de outras pastas que ele esteja e tente novamente. Se ele estiver funcionando, ignore essa mensagem.")
+with open(perguntaDados, "r") as f_entrada:
+    leitor = csv.reader(f_entrada, delimiter=";")
     #Pegando o nome da estação
     primeira_linha = f_entrada.readline().rstrip()
     print(primeira_linha)
@@ -54,7 +61,7 @@ with open(caminho_completo_para_arquivo, "r") as f_entrada:
     leitor["Mes"] = leitor["Data"].dt.month
     leitor["Ano"] = leitor["Data"].dt.year
 
-caminhoOriginal = "Modelo para normais climatológicas 1991-2020.xlsx"
+caminhoOriginal = os.path.expanduser(f"~/Scripts/sheetMasters/Modelo para normais climatológicas 1991-2020.xlsx")
 novoCaminho = (primeira_linha[6:]+"_BDMEP.xlsx")
 
 copyfile(caminhoOriginal, novoCaminho)
@@ -66,7 +73,9 @@ dados2 = ("Nas mínimas, a menor foi {} graus em {}, e a maior foi {}, em {}.".f
 print(dados1, dados2)
 print("Sua planilha está sendo automatizada...")
 
-book = load_workbook("Modelo para normais climatológicas 1991-2020.xlsx")
+book = load_workbook(caminhoOriginal)
+
+print(f"Abrindo o arquivo {book}")
 
 for ano in leitor["Ano"].dropna().unique():
     dadosAno = leitor[leitor["Ano"]== ano]
@@ -101,7 +110,13 @@ for ano in leitor["Ano"].dropna().unique():
             if pd.isna(value):
                 value = "-"
             ws.cell(row=row, column=col, value=value)
+localSave = os.path.expanduser(f"~/Documentos/{novoCaminho}")
+book.save(localSave)
+if pergunta_excluir_csv == "S":
+    os.remove(perguntaDados)
+    print(f"O arquivo {perguntaDados} foi excluído com sucesso.")
+    print(f"Sua planilha foi salva em {localSave} e o arquivo CSV foi excluído")
 
-book.save(novoCaminho)
-print("Sua planilha já foi formatada automaticamente. Volte sempre!")
+else:
+    print(f"Sua nova planilha foi salva em {localSave} e o arquivo csv foi mantido.")
 
